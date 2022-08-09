@@ -3,10 +3,12 @@ package com.etiya.northwind.api.controllers;
 import com.etiya.northwind.business.abstracts.CustomerService;
 import com.etiya.northwind.business.responses.CreateCustomerRequest;
 import com.etiya.northwind.business.responses.CustomerListResponse;
+import com.etiya.northwind.business.responses.CustomerPagingDTO;
 import com.etiya.northwind.business.responses.UpdateCustomerRequest;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/customers")
@@ -45,5 +47,9 @@ public class CustomerController {
 		return customerService.updateCustomer(customerId, updateCustomerRequest);
 	}
 
-	
+	@GetMapping("/getAllWithPaging")
+	public Map<String, Object> getAllWithPaging(@RequestParam int page, @RequestParam int size) {
+		return this.customerService.findByPageable(page-1,size);
+
+	}
 }
